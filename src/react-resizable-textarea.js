@@ -1,5 +1,7 @@
 import React from 'react';
 
+const borderOffset = 2;
+
 class ResizableTextArea extends React.Component {
     constructor(props) {
         super(props);
@@ -8,8 +10,11 @@ class ResizableTextArea extends React.Component {
         this._xStart = 0;
         this._lastY = 0;
         this._lastX = 0;
-        this._textareaHeight = 0;
-        this._textareaWidth = 0;
+        this._draggerHeight = 0;
+        this._containerHeight = 0;
+        this._containerWidth = 0;
+        this._textAreaHeight = 0;
+        this._textAreaWidth = 0;
 
         this._onEnableDrag = this._onEnableDrag.bind(this);
         this._onDisableDrag = this._onDisableDrag.bind(this);
@@ -28,43 +33,52 @@ class ResizableTextArea extends React.Component {
     _onEnableDrag(e) {
         document.addEventListener('mousemove', this._onMouseMove);
         document.addEventListener('mouseup', this._onDisableDrag);
+        
+        this._prevTextAreaStyleBackground = this._textArea.style.background;
+        this._textArea.style.background = "transparent";
 
         this._yStart = e.clientY;
         this._xStart = e.clientX;
         this._lastY = e.clientY;
         this._lastX = e.clientX;
-        this._textareaHeight = this._subject.offsetHeight;
-        this._textareaWidth = this._subject.offsetWidth;
+        this._containerHeight = this._container.offsetHeight;
+        this._containerWidth = this._container.offsetWidth;
+
+        this._draggerHeight = this._dragger.offsetHeight;
     }
 
     _onDisableDrag(e) {
         document.removeEventListener('mousemove', this._onMouseMove);
         document.removeEventListener('mouseup', this._onDisableDrag);
+
+        this._textArea.style.background = this._prevTextAreaStyleBackground;
     }
 
     _onMouseMove(e) {
+        
         if (e.clientY > this._lastY) {
             var yMovement = (e.clientY - this._lastY);
-            var newHeight = (this._textareaHeight + yMovement);
-            this._textareaHeight = newHeight;
-            this._subject.style.height = newHeight + "px";
+            var newHeight = (this._containerHeight + yMovement);
+            this._containerHeight = (this._containerHeight + yMovement);
+            this._textArea.style.height = (this._containerHeight - this._draggerHeight - borderOffset) + "px";
+            this._container.style.height = (this._containerHeight) + "px";
           } else if (e.clientY < this._lastY) {
             var yMovement = (this._lastY - e.clientY);
-            var newHeight = (this._textareaHeight - yMovement);
-            this._textareaHeight = newHeight;
-            this._subject.style.height = newHeight + "px";
+            this._containerHeight = (this._containerHeight - yMovement);
+            this._textArea.style.height = (this._containerHeight - this._draggerHeight - borderOffset) + "px";
+            this._container.style.height = (this._containerHeight) + "px";
           }
           
           if (e.clientX > this._lastX) {
             var xMovement = (e.clientX - this._lastX);
-            var newWidth = (this._textareaWidth + xMovement);
-            this._textareaWidth = newWidth;
-            this._subject.style.width = newWidth + "px";
+            this._containerWidth = (this._containerWidth + xMovement);
+            this._container.style.width = this._containerWidth + "px";
+            this._textArea.style.width = (this._containerWidth - borderOffset) + "px";
           } else if (e.clientX < this._lastX) {
             var xMovement = (this._lastX - e.clientX);
-            var newWidth = (this._textareaWidth - xMovement);
-            this._textareaWidth = newWidth;
-            this._subject.style.width = newWidth + "px";
+            this._containerWidth = (this._containerWidth - xMovement);
+            this._container.style.width = this._containerWidth + "px";
+            this._textArea.style.width = (this._containerWidth - borderOffset) + "px";
           }
           
           this._lastX = e.clientX;
@@ -72,10 +86,21 @@ class ResizableTextArea extends React.Component {
     }
 
     render() {
-        return (<div className="resizable-textarea-container">
+        
+        var props = {};
+
+        Object.keys(this.props).forEach(k => {
+            props[k] = this.props[k];
+        });
+
+        if (props.className) {
+            props.className = 'resizable-textarea ' + props.className;
+        }
+
+        return (<div className="resizable-textarea-container" ref={ (container) => this._container = container }>
                     <textarea className="resizable-textarea"
-                              ref={ (subject) => this._subject = subject }
-                              { ...this.props }>
+                              ref={ (_textArea) => this._textArea = _textArea }
+                              { ...props }>
                     </textarea>
                     <div className="resizable-textarea-dragger" ref={ (dragger) => this._dragger = dragger }></div>
                 </div>);

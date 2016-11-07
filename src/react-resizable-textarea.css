@@ -1,26 +1,25 @@
 .resizable-textarea-container {
-  position: relative;
   display: inline-block;
   padding: 0;
   margin: 0;
   line-height: 0;
-  border: 1px solid black;
 }
 
 .resizable-textarea-dragger {
   width: 100%;
   height: 10px ;
-  bottom: -4px;
-  right: -4px;
   background-size: contain;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAARCAIAAACNaGH2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAScwAAEnMBjCK5BwAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAEbSURBVDhPrZHLioNAEEXzn/6LGxUVFERx49+40eAimIUSEAXR+EAwDxKVqOmpUM3MJGQSAnMXTd/bp6ubqgX5RP9Nj+N4Op1w/4buus4wDNd10b6ioaSu647jUP+CPp/Pmqb5vn+9Xmn0F308HgVB8DzvNwp6Qu92O1mW1+s19YSkaXo4HGDzSLdtK0lSHMdYFdYwDEVR7Pse7B3dNA3LspvNhnpC4AW4DK+h/aGrquJ5Pooi6glZrVaKouAfUJTebrccx5VliXae5+VyqarqMAyYoG50kiTwgTzPMQLUtm3TNGE0mMCduq5hqIv9fg/NKooCD0BBEFiW9Y2CYJYMw2RZdqt9uVwwRU3T9NBmGCo0EbC7nrzVJzQhX5Cx0nFHMxDQAAAAAElFTkSuQmCC');
   background-repeat: no-repeat;
   background-position: center right;
 }
 
+.resizable-textarea-dragger:hover {
+    cursor: se-resize;
+}
+
 .resizable-textarea {
   overflow-y: auto;
-  border: 0;
   resize: none;
   padding: 0;
   margin: 0;
