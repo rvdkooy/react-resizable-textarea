@@ -15,9 +15,19 @@ class Wrapper extends React.Component {
         this.setState({ value: e.target.value });
     }
 
+
+//
     render() {
         return (<div>
+                    <h1>Default:</h1>
                     <ResizableTextArea value={ this.state.value } onChange={ this._onChange } />
+                    <div>
+                        <h1>Scroll container:</h1>
+                        <div style={ { width: '500px', height: '500px', border: '1px solid blue', overflow: 'auto' } }>
+                            <ResizableTextArea value={ this.state.value } onChange={ this._onChange } />
+                        </div>
+
+                    </div>
                 </div>);
     }
 }
