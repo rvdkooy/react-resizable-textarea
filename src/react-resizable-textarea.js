@@ -4,15 +4,11 @@ class ResizableTextArea extends React.Component {
     constructor(props) {
         super(props);
 
-        this._yStart = 0;
-        this._xStart = 0;
         this._lastY = 0;
         this._lastX = 0;
         this._draggerHeight = 0;
         this._containerHeight = 0;
         this._containerWidth = 0;
-        this._textAreaHeight = 0;
-        this._textAreaWidth = 0;
 
         this._onEnableDrag = this._onEnableDrag.bind(this);
         this._onDisableDrag = this._onDisableDrag.bind(this);
@@ -24,7 +20,7 @@ class ResizableTextArea extends React.Component {
         this._dragger.addEventListener('mousedown', this._onEnableDrag);
     }
 
-    componentWillUnmout() {
+    componentWillUnmount() {
         this._dragger.removeEventListener('mousedown', this._onEnableDrag);
         this._onDisableDrag();
     }
@@ -36,8 +32,6 @@ class ResizableTextArea extends React.Component {
         this._prevTextAreaStyleBackground = this._textArea.style.background;
         this._textArea.style.background = "transparent";
 
-        this._yStart = e.clientY;
-        this._xStart = e.clientX;
         this._lastY = e.clientY;
         this._lastX = e.clientX;
         this._containerHeight = this._container.offsetHeight;
@@ -68,7 +62,6 @@ class ResizableTextArea extends React.Component {
     }
 
     render() {
-        
         var props = {};
 
         Object.keys(this.props).forEach(k => {
