@@ -16,9 +16,8 @@ import ResizableTextArea from 'react-resizable-textarea';
 
 
 ```
-npm install
+npm install // installs all dependencies
 
-npm run devserver
+npm run dev-server // starts webserver, runs webpack to create demo bundle and opens a browser
 
-npm test
 ```
