@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rvdkooy/react-resizable-textarea.svg?branch=master)](https://travis-ci.org/rvdkooy/react-resizable-textarea)
+
 # react-resizable-textarea
 With this ReactJs component you can render textarea's that are resizable in IE, just like in Chrome and Firefox
 
