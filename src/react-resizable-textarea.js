@@ -44,6 +44,9 @@ class ResizableTextArea extends React.Component {
         document.removeEventListener('mouseup', this._onDisableDrag);
 
         this._textArea.style.background = this._prevTextAreaStyleBackground;
+
+        // remove selection, which can be a site effect when hovering over the text
+        window.getSelection().removeAllRanges();
     }
 
     _onMouseMove(e) {
