@@ -15,8 +15,6 @@ class Wrapper extends React.Component {
         this.setState({ value: e.target.value });
     }
 
-
-//
     render() {
         return (<div>
                     <div>
@@ -41,8 +39,5 @@ class Wrapper extends React.Component {
                 </div>);
     }
 }
-
-
-
 
 ReactDom.render(<Wrapper />, document.getElementById('maincontainer'));

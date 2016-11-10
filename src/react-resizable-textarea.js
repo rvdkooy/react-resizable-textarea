@@ -108,6 +108,10 @@ class ResizableTextArea extends React.Component {
             props.className = 'resizable-textarea ' + props.className;
         }
 
+        delete props.scrollContainer;
+        delete props.directions;
+        delete props.borderOffset;
+
         return (<div className="resizable-textarea-container" ref={ (container) => this._container = container }>
                     <textarea className="resizable-textarea"
                               ref={ (_textArea) => this._textArea = _textArea }
