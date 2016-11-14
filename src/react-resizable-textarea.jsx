@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
-class ResizableTextArea extends React.Component {
+class ResizableTextArea extends Component {
     constructor(props) {
         super(props);
 
@@ -29,7 +29,7 @@ class ResizableTextArea extends React.Component {
         document.addEventListener('mouseup', this._onDisableDrag);
 
         this._prevTextAreaStyleBackgroundColor = this._textArea.style.backgroundColor;
-        this._textArea.style.backgroundColor = "transparent";
+        this._textArea.style.backgroundColor = 'transparent';
 
         this._lastY = e.clientY;
         this._lastX = e.clientX;
@@ -59,17 +59,18 @@ class ResizableTextArea extends React.Component {
 
     _onMouseMove(e) {
         if (this.props.directions.indexOf('y') !== -1) {
-            var yMovement = e.clientY - this._lastY;
+            const yMovement = e.clientY - this._lastY;
             this._containerHeight = (this._containerHeight + yMovement);
-            this._textArea.style.height = (this._containerHeight - this._draggerHeight - this.props.borderOffset) + "px";
-            this._container.style.height = (this._containerHeight) + "px";
+            this._textArea.style.height =
+                (this._containerHeight - this._draggerHeight - this.props.borderOffset) + 'px';
+            this._container.style.height = (this._containerHeight) + 'px';
         }
 
         if (this.props.directions.indexOf('x') !== -1) {
-            var xMovement = e.clientX - this._lastX;
+            const xMovement = e.clientX - this._lastX;
             this._containerWidth = (this._containerWidth + xMovement);
-            this._container.style.width = this._containerWidth + "px";
-            this._textArea.style.width = (this._containerWidth - this.props.borderOffset) + "px";
+            this._container.style.width = this._containerWidth + 'px';
+            this._textArea.style.width = (this._containerWidth - this.props.borderOffset) + 'px';
         }
 
         this._lastX = e.clientX;
@@ -77,9 +78,9 @@ class ResizableTextArea extends React.Component {
     }
 
     render() {
-        var props = {};
+        const props = {};
 
-        Object.keys(this.props).forEach(k => {
+        Object.keys(this.props).forEach((k) => {
             props[k] = this.props[k];
         });
 
@@ -90,23 +91,23 @@ class ResizableTextArea extends React.Component {
         delete props.directions;
         delete props.borderOffset;
 
-        return (<div className="resizable-textarea-container" ref={ (container) => this._container = container }>
-                    <textarea className="resizable-textarea"
-                              ref={ (_textArea) => this._textArea = _textArea }
-                              { ...props }>
-                    </textarea>
-                    <div className="resizable-textarea-dragger" ref={ (dragger) => this._dragger = dragger }></div>
-                </div>);
+        return (
+            <div className="resizable-textarea-container" ref={ container => this._container = container }>
+                <textarea
+                    className="resizable-textarea"
+                    ref={ textArea => this._textArea = textArea } { ...props } />
+                <div className="resizable-textarea-dragger" ref={ dragger => this._dragger = dragger } />
+            </div>);
     }
 }
 
-ResizableTextArea.propTypes = { 
-    directions: React.PropTypes.string,
-    borderOffset: React.PropTypes.number
+ResizableTextArea.propTypes = {
+    directions: PropTypes.string,
+    borderOffset: PropTypes.number
 };
 
-ResizableTextArea.defaultProps = { 
-    directions: "y",
+ResizableTextArea.defaultProps = {
+    directions: 'y',
     borderOffset: 2
 };
 
