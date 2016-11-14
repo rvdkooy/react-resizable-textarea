@@ -17,22 +17,11 @@ class ResizableTextArea extends React.Component {
 
     componentDidMount() {
         this._dragger.addEventListener('mousedown', this._onEnableDrag);
-        this._scrollableContainer = this._findScrollableContainer(this.props.scrollContainer);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.scrollContainer !== this.props.scrollContainer) {
-            this._scrollableContainer = this._findScrollableContainer(nextProps.scrollContainer);
-        }
     }
 
     componentWillUnmount() {
         this._dragger.removeEventListener('mousedown', this._onEnableDrag);
         this._removeEventListeners();
-    }
-
-    _findScrollableContainer(cssSelector) {
-        return document.querySelector(cssSelector);
     }
 
     _onEnableDrag(e) {
@@ -48,15 +37,7 @@ class ResizableTextArea extends React.Component {
         this._containerWidth = this._container.offsetWidth;
         this._draggerHeight = this._dragger.offsetHeight;
 
-
-        this._parentNode = this._container.parentNode.parentNode.parentNode.parentNode;
-
-        if (this._scrollableContainer) {
-            this._scrollableContainer.addEventListener('mousedown', this._onPreventMouseDownOnScrollableParent);
-        }
-    }
-
-    _onPreventMouseDownOnScrollableParent(e) {
+        // this prevents scrolling while dragging the textarea
         e.preventDefault();
     }
 
@@ -91,8 +72,6 @@ class ResizableTextArea extends React.Component {
             this._textArea.style.width = (this._containerWidth - this.props.borderOffset) + "px";
         }
 
-        
-
         this._lastX = e.clientX;
         this._lastY = e.clientY;
     }
@@ -108,7 +87,6 @@ class ResizableTextArea extends React.Component {
             props.className = 'resizable-textarea ' + props.className;
         }
 
-        delete props.scrollContainer;
         delete props.directions;
         delete props.borderOffset;
 
@@ -123,7 +101,6 @@ class ResizableTextArea extends React.Component {
 }
 
 ResizableTextArea.propTypes = { 
-    scrollContainer: React.PropTypes.string,
     directions: React.PropTypes.string,
     borderOffset: React.PropTypes.number
 };
