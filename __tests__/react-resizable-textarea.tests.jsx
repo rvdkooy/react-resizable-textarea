@@ -8,17 +8,23 @@ describe('react-resizable-textarea tests', () => {
     describe('When rendering the textarea', () => {
 
         beforeAll(() => {
-            component = TestUtils.renderIntoDocument(<ResizableTextArea />);
+            component = TestUtils.renderIntoDocument(<ResizableTextArea defaultValue="foo" />);
         });
 
         it('it should render a textarea', () => {
             const textArea = TestUtils.findOne(component, '.resizable-textarea');
             expect(textArea).toBeDefined();
+            expect(textArea.innerHTML).toBe('foo');
         });
 
         it('it should render a dragger', () => {
             const dragger = TestUtils.findOne(component, '.resizable-textarea-dragger');
             expect(dragger).toBeDefined();
+        });
+
+        it('it should be able to access the underlying textarea', () => {
+            const textarea = component.getTextarea();
+            expect(textarea.innerHTML).toBe('foo');
         });
 
         afterAll(() => {

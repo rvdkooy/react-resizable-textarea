@@ -24,6 +24,10 @@ class ResizableTextArea extends Component {
         this._removeEventListeners();
     }
 
+    getTextarea() {
+        return this._textArea;
+    }
+
     _onEnableDrag(e) {
         document.addEventListener('mousemove', this._onMouseMove);
         document.addEventListener('mouseup', this._onDisableDrag);
