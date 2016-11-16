@@ -1,6 +1,6 @@
 import ReactDom from 'react-dom';
 import React from 'react';
-import ResizableTextArea from '../src/react-resizable-textarea.jsx';
+import ResizableTextArea from '../src/react-resizable-textarea';
 
 const lorumIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consectetur a ' +
                    ' eros nec tempus. Morbi aliquam et neque at lobortis. Donec consectetur risus quis ' +
@@ -35,7 +35,7 @@ class Wrapper extends React.Component {
                             style={ { width: '300px', height: '300px', border: '1px solid blue', overflow: 'auto' } }>
                             <p>{ lorumIpsum }</p>
                             <ResizableTextArea value={ this.state.value }
-                                  onChange={ this._onChange } />
+                                onChange={ this._onChange } />
                             <p>{ lorumIpsum }</p>
                         </div>
                     </div>

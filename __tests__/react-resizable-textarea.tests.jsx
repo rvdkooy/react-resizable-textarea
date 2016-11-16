@@ -1,6 +1,6 @@
 import React from 'react';
 import TestUtils from 'react-testutils-additions';
-import ResizableTextArea from '../src/react-resizable-textarea.jsx';
+import ResizableTextArea from '../src/react-resizable-textarea';
 
 describe('react-resizable-textarea tests', () => {
     let component;

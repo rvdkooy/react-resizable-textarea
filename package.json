@@ -2,7 +2,7 @@
   "name": "react-resizable-textarea",
   "version": "0.0.2",
   "description": "",
-  "main": "./index.js",
+  "main": "./src/react-resizable-textarea.js",
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",

@@ -1,1 +1,0 @@
-export { ResizableTextArea as default } from './src/react-resizable-textarea.jsx';
