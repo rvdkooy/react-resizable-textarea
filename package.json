@@ -2,7 +2,7 @@
   "name": "react-resizable-textarea",
   "version": "0.0.4",
   "description": "",
-  "main": "./src/react-resizable-textarea.js",
+  "main": "./dist/react-resizable-textarea.js",
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
@@ -28,6 +28,8 @@
     "webpack-dev-server": "^1.16.2"
   },
   "scripts": {
+    "compile": "webpack --config webpack.production.js",
+    "prepublish": "npm run compile && npm test",
     "test": "karma start --single-run",
     "dev-server": "webpack-dev-server --open --config ./demo/webpack.config.js --progress --colors"
   },

@@ -1,6 +1,6 @@
 import ReactDom from 'react-dom';
 import React from 'react';
-import ResizableTextArea from '../src/react-resizable-textarea.js';
+import ResizableTextArea from '../dist/react-resizable-textarea.js';
 
 const lorumIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consectetur a ' +
                    ' eros nec tempus. Morbi aliquam et neque at lobortis. Donec consectetur risus quis ' +
