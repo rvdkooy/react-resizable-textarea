@@ -1,0 +1,7 @@
+__tests__
+demo
+karma.conf.js
+.travis.yml
+.babelrc
+.eslintrc
+.gitignore
