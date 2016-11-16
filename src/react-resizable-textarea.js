@@ -86,18 +86,19 @@ class ResizableTextArea extends Component {
 
         if (props.className) {
             props.className = 'resizable-textarea ' + props.className;
+        } else {
+            props.className = 'resizable-textarea';
         }
+        props.ref = t => this._textArea = t;
 
         delete props.directions;
         delete props.borderOffset;
 
         return (
-            <div className="resizable-textarea-container" ref={ container => this._container = container }>
-                <textarea
-                    className="resizable-textarea"
-                    ref={ textArea => this._textArea = textArea } { ...props } />
-                <div className="resizable-textarea-dragger" ref={ dragger => this._dragger = dragger } />
-            </div>);
+            React.createElement('div', { className: 'resizable-textarea-container', ref: c => this._container = c },
+                React.createElement('textarea', props),
+                React.createElement('div', { className: 'resizable-textarea-dragger', ref: d => this._dragger = d })
+            ));
     }
 }
 
