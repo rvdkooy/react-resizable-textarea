@@ -6,9 +6,8 @@ class ResizableTextArea extends Component {
 
         this._lastY = 0;
         this._lastX = 0;
-        this._draggerHeight = 0;
-        this._containerHeight = 0;
-        this._containerWidth = 0;
+        this._textAreaHeight = 0;
+        this._textAreaWidth = 0;
 
         this._onEnableDrag = this._onEnableDrag.bind(this);
         this._onDisableDrag = this._onDisableDrag.bind(this);
@@ -37,9 +36,8 @@ class ResizableTextArea extends Component {
 
         this._lastY = e.clientY;
         this._lastX = e.clientX;
-        this._containerHeight = this._container.offsetHeight;
-        this._containerWidth = this._container.offsetWidth;
-        this._draggerHeight = this._dragger.offsetHeight;
+        this._textAreaHeight = this._textArea.offsetHeight;
+        this._textAreaWidth = this._textArea.offsetWidth;
 
         // this prevents scrolling while dragging the textarea
         e.preventDefault();
@@ -64,17 +62,14 @@ class ResizableTextArea extends Component {
     _onMouseMove(e) {
         if (this.props.directions.indexOf('y') !== -1) {
             const yMovement = e.clientY - this._lastY;
-            this._containerHeight = Math.max(this._containerHeight + yMovement, 40);
-            this._textArea.style.height =
-                (this._containerHeight - this._draggerHeight - this.props.borderOffset) + 'px';
-            this._container.style.height = (this._containerHeight) + 'px';
+            this._textAreaHeight = Math.max(this._textAreaHeight + yMovement, 30);
+            this._textArea.style.height = this._textAreaHeight + 'px';
         }
 
         if (this.props.directions.indexOf('x') !== -1) {
             const xMovement = e.clientX - this._lastX;
-            this._containerWidth = Math.max(this._containerWidth + xMovement, 100);
-            this._container.style.width = this._containerWidth + 'px';
-            this._textArea.style.width = (this._containerWidth - this.props.borderOffset) + 'px';
+            this._textAreaWidth = Math.max(this._textAreaWidth + xMovement, 100);
+            this._textArea.style.width = this._textAreaWidth + 'px';
         }
 
         this._lastX = e.clientX;
@@ -92,7 +87,6 @@ class ResizableTextArea extends Component {
         props.ref = t => this._textArea = t;
 
         delete props.directions;
-        delete props.borderOffset;
 
         const draggerClassNames = `resizable-textarea-dragger direction-${this.props.directions}`;
 
@@ -106,14 +100,13 @@ class ResizableTextArea extends Component {
 
 ResizableTextArea.propTypes = {
     directions: PropTypes.string,
-    borderOffset: PropTypes.number,
     className: PropTypes.string
 };
 
 ResizableTextArea.defaultProps = {
     directions: 'y',
-    borderOffset: 2,
     className: ''
 };
 
 export default ResizableTextArea;
+
