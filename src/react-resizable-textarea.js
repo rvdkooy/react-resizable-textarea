@@ -15,6 +15,14 @@ class ResizableTextArea extends Component {
     }
 
     componentDidMount() {
+        if (this._textArea.offsetHeight < this.props.minHeight) {
+            this._textArea.style.height = this.props.minHeight + 'px';
+        }
+
+        if (this._textArea.offsetWidth < this.props.minWidth) {
+            this._textArea.style.width = this.props.minWidth + 'px';
+        }
+
         this._dragger.addEventListener('mousedown', this._onEnableDrag);
     }
 
@@ -62,13 +70,13 @@ class ResizableTextArea extends Component {
     _onMouseMove(e) {
         if (this.props.directions.indexOf('y') !== -1) {
             const yMovement = e.clientY - this._lastY;
-            this._textAreaHeight = Math.max(this._textAreaHeight + yMovement, 30);
+            this._textAreaHeight = Math.max(this._textAreaHeight + yMovement, this.props.minHeight);
             this._textArea.style.height = this._textAreaHeight + 'px';
         }
 
         if (this.props.directions.indexOf('x') !== -1) {
             const xMovement = e.clientX - this._lastX;
-            this._textAreaWidth = Math.max(this._textAreaWidth + xMovement, 100);
+            this._textAreaWidth = Math.max(this._textAreaWidth + xMovement, this.props.minWidth);
             this._textArea.style.width = this._textAreaWidth + 'px';
         }
 
@@ -87,6 +95,8 @@ class ResizableTextArea extends Component {
         props.ref = t => this._textArea = t;
 
         delete props.directions;
+        delete props.minWidth;
+        delete props.minHeight;
 
         const draggerClassNames = `resizable-textarea-dragger direction-${this.props.directions}`;
 
@@ -100,12 +110,16 @@ class ResizableTextArea extends Component {
 
 ResizableTextArea.propTypes = {
     directions: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    minWidth: PropTypes.number,
+    minHeight: PropTypes.number
 };
 
 ResizableTextArea.defaultProps = {
     directions: 'y',
-    className: ''
+    className: '',
+    minWidth: 100,
+    minHeight: 30
 };
 
 export default ResizableTextArea;
