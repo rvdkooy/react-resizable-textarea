@@ -64,7 +64,7 @@ class ResizableTextArea extends Component {
     _onMouseMove(e) {
         if (this.props.directions.indexOf('y') !== -1) {
             const yMovement = e.clientY - this._lastY;
-            this._containerHeight = (this._containerHeight + yMovement);
+            this._containerHeight = Math.max(this._containerHeight + yMovement, 40);
             this._textArea.style.height =
                 (this._containerHeight - this._draggerHeight - this.props.borderOffset) + 'px';
             this._container.style.height = (this._containerHeight) + 'px';
@@ -72,7 +72,7 @@ class ResizableTextArea extends Component {
 
         if (this.props.directions.indexOf('x') !== -1) {
             const xMovement = e.clientX - this._lastX;
-            this._containerWidth = (this._containerWidth + xMovement);
+            this._containerWidth = Math.max(this._containerWidth + xMovement, 100);
             this._container.style.width = this._containerWidth + 'px';
             this._textArea.style.width = (this._containerWidth - this.props.borderOffset) + 'px';
         }
