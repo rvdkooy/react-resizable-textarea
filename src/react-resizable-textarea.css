@@ -1,21 +1,31 @@
 .resizable-textarea-container {
   display: inline-block;
-  padding: 0;
-  margin: 0;
   line-height: 0;
 }
 
 .resizable-textarea-dragger {
   width: 100%;
-  height: 10px ;
-  background-size: contain;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAARCAIAAACNaGH2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAScwAAEnMBjCK5BwAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAEbSURBVDhPrZHLioNAEEXzn/6LGxUVFERx49+40eAimIUSEAXR+EAwDxKVqOmpUM3MJGQSAnMXTd/bp6ubqgX5RP9Nj+N4Op1w/4buus4wDNd10b6ioaSu647jUP+CPp/Pmqb5vn+9Xmn0F308HgVB8DzvNwp6Qu92O1mW1+s19YSkaXo4HGDzSLdtK0lSHMdYFdYwDEVR7Pse7B3dNA3LspvNhnpC4AW4DK+h/aGrquJ5Pooi6glZrVaKouAfUJTebrccx5VliXae5+VyqarqMAyYoG50kiTwgTzPMQLUtm3TNGE0mMCduq5hqIv9fg/NKooCD0BBEFiW9Y2CYJYMw2RZdqt9uVwwRU3T9NBmGCo0EbC7nrzVJzQhX5Cx0nFHMxDQAAAAAElFTkSuQmCC');
+  padding-top: 1px;
+  height: 9px;
+  background-size: 8px 8px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAALUlEQVR42mNgwAH279//H4QZyFYAAv///5fBqQurCQQVEHQMVjaMAQQc2BQAABXMU79BvB5bAAAAAElFTkSuQmCC");
   background-repeat: no-repeat;
-  background-position: center right;
+  background-position: bottom right;
+}
+.resizable-textarea-dragger:hover {
+  background-color: #f2f2f2;
 }
 
-.resizable-textarea-dragger:hover {
-    cursor: se-resize;
+.resizable-textarea-dragger.direction-y {
+    cursor: s-resize;
+}
+
+.resizable-textarea-dragger.direction-xy {
+  cursor: se-resize;
+}
+
+.resizable-textarea-dragger.direction-x {
+  cursor: e-resize;
 }
 
 .resizable-textarea {

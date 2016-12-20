@@ -88,32 +88,32 @@ class ResizableTextArea extends Component {
             props[k] = this.props[k];
         });
 
-        if (props.className) {
-            props.className = 'resizable-textarea ' + props.className;
-        } else {
-            props.className = 'resizable-textarea';
-        }
+        props.className = `resizable-textarea ${this.props.className}`;
         props.ref = t => this._textArea = t;
 
         delete props.directions;
         delete props.borderOffset;
 
+        const draggerClassNames = `resizable-textarea-dragger direction-${this.props.directions}`;
+
         return (
             React.createElement('div', { className: 'resizable-textarea-container', ref: c => this._container = c },
                 React.createElement('textarea', props),
-                React.createElement('div', { className: 'resizable-textarea-dragger', ref: d => this._dragger = d })
+                React.createElement('div', { className: draggerClassNames, ref: d => this._dragger = d })
             ));
     }
 }
 
 ResizableTextArea.propTypes = {
     directions: PropTypes.string,
-    borderOffset: PropTypes.number
+    borderOffset: PropTypes.number,
+    className: PropTypes.string
 };
 
 ResizableTextArea.defaultProps = {
     directions: 'y',
-    borderOffset: 2
+    borderOffset: 2,
+    className: ''
 };
 
 export default ResizableTextArea;
