@@ -12,12 +12,9 @@
   background-repeat: no-repeat;
   background-position: bottom right;
 }
-.resizable-textarea-dragger:hover {
-  background-color: #f2f2f2;
-}
 
 .resizable-textarea-dragger.direction-y {
-    cursor: s-resize;
+  cursor: s-resize;
 }
 
 .resizable-textarea-dragger.direction-xy {

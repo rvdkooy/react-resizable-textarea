@@ -12,15 +12,12 @@ class ResizableTextArea extends Component {
         this._onEnableDrag = this._onEnableDrag.bind(this);
         this._onDisableDrag = this._onDisableDrag.bind(this);
         this._onMouseMove = this._onMouseMove.bind(this);
+        this._autoSizeTextarea = this._autoSizeTextarea.bind(this);
     }
 
     componentDidMount() {
-        if (this._textArea.offsetHeight < this.props.minHeight) {
-            this._textArea.style.height = this.props.minHeight + 'px';
-        }
-
-        if (this._textArea.offsetWidth < this.props.minWidth) {
-            this._textArea.style.width = this.props.minWidth + 'px';
+        if (this.props.rows === 'auto') {
+            this._autoSizeTextarea();
         }
 
         this._dragger.addEventListener('mousedown', this._onEnableDrag);
@@ -33,6 +30,24 @@ class ResizableTextArea extends Component {
 
     getTextarea() {
         return this._textArea;
+    }
+
+    _autoSizeTextarea() {
+        const lastOverflowY = this._textArea.style.overflowY;
+        const width = Math.max(this._textArea.offsetWidth, this.props.minWidth);
+
+        this._textArea.style.width = width + 'px';
+        this._textArea.style.overflowY = 'hidden';
+
+        const textAreaCS = window.getComputedStyle(this._textArea);
+        const topBorderWidth = parseInt(textAreaCS.getPropertyValue('border-top-width'), 10);
+        const bottomBorderWidth = parseInt(textAreaCS.getPropertyValue('border-bottom-width'), 10);
+
+        let height = topBorderWidth + bottomBorderWidth + this._textArea.scrollHeight;
+        height = Math.max(height, this.props.minHeight);
+
+        this._textArea.style.height = height + 'px';
+        this._textArea.style.overflowY = lastOverflowY;
     }
 
     _onEnableDrag(e) {
@@ -94,9 +109,23 @@ class ResizableTextArea extends Component {
         props.className = `resizable-textarea ${this.props.className}`;
         props.ref = t => this._textArea = t;
 
+        if (props.style) {
+            props.style.minWidth = props.minWidth;
+            props.style.minHeight = props.minHeight;
+        } else {
+            props.style = {
+                minWidth: props.minWidth,
+                minHeight: props.minHeight
+            };
+        }
+
         delete props.directions;
         delete props.minWidth;
         delete props.minHeight;
+
+        if (props.rows === 'auto') {
+            delete props.rows;
+        }
 
         const draggerClassNames = `resizable-textarea-dragger direction-${this.props.directions}`;
 
@@ -112,7 +141,11 @@ ResizableTextArea.propTypes = {
     directions: PropTypes.string,
     className: PropTypes.string,
     minWidth: PropTypes.number,
-    minHeight: PropTypes.number
+    minHeight: PropTypes.number,
+    rows: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string
+    ])
 };
 
 ResizableTextArea.defaultProps = {
