@@ -49,10 +49,10 @@ class Wrapper extends React.Component {
                     </div>
                     <div>
                         <h1>Auto size on mount:</h1>
-                        <p><code>{ '<ResizableTextArea rows="auto" />' }</code></p>
+                        <p><code>{ '<ResizableTextArea fitOnMount />' }</code></p>
                         <ResizableTextArea value={ this.state.value }
                             onChange={ this._onChange }
-                            rows="auto" />
+                            fitOnMount />
                     </div>
                     <div>
                         <h1>Minimum dimensions:</h1>

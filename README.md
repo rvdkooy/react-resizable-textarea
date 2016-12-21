@@ -19,8 +19,7 @@ import ResizableTextArea from 'react-resizable-textarea';
 ``` javascript
 <ResizableTextArea
 	directions="x|y|xy" // string - Resizable directions
-	rows={n} // number - Native browser behavior
-	rows="auto" // string - Auto size the textarea on mount
+	fitOnMount // boolean - Auto size the textarea on mount
 	minWidth={n} // number - Minimum width in px
 	minHeight={n} // number - Minimum height in px
 />

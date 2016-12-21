@@ -16,7 +16,7 @@ class ResizableTextArea extends Component {
     }
 
     componentDidMount() {
-        if (this.props.rows === 'auto') {
+        if (this.props.fitOnMount) {
             this._autoSizeTextarea();
         }
 
@@ -122,10 +122,7 @@ class ResizableTextArea extends Component {
         delete props.directions;
         delete props.minWidth;
         delete props.minHeight;
-
-        if (props.rows === 'auto') {
-            delete props.rows;
-        }
+        delete props.fitOnMount;
 
         const draggerClassNames = `resizable-textarea-dragger direction-${this.props.directions}`;
 
@@ -142,17 +139,15 @@ ResizableTextArea.propTypes = {
     className: PropTypes.string,
     minWidth: PropTypes.number,
     minHeight: PropTypes.number,
-    rows: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ])
+    fitOnMount: PropTypes.bool
 };
 
 ResizableTextArea.defaultProps = {
     directions: 'y',
     className: '',
     minWidth: 100,
-    minHeight: 30
+    minHeight: 30,
+    fitOnMount: false
 };
 
 export default ResizableTextArea;
