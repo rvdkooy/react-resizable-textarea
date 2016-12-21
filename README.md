@@ -4,7 +4,7 @@
 With this ReactJs component you can render textarea's that are resizable in IE, just like in Chrome and Firefox
 
 
-example:
+## Usage:
 
 ``` javascript
 
@@ -14,12 +14,22 @@ import ResizableTextArea from 'react-resizable-textarea';
 
 ```
 
-### Development
+## Optional props
 
+``` javascript
+<ResizableTextArea
+	directions="x|y|xy" // string - Resizable directions
+	rows={n} // number - Native browser behavior
+	rows="auto" // string - Auto size the textarea on mount
+	minWidth={n} // number - Minimum width in px
+	minHeight={n} // number - Minimum height in px
+/>
+````
+
+## Development
 
 ```
 npm install // installs all dependencies
-
 npm run dev-server // starts webserver, runs webpack to create demo bundle and opens a browser
 
 ```
