@@ -1,14 +1,24 @@
 var path = require('path');
+var webpack = require('webpack');
 
 var webpackConfig = {
     context: __dirname,
-    entry: "./src/react-resizable-textarea.js",
+    entry: {
+        "react-resizable-textarea": "./src/react-resizable-textarea.js",
+        "react-resizable-textarea.min": "./src/react-resizable-textarea.js",
+    },
     output: {
         path: __dirname + '/dist',
-        filename: "react-resizable-textarea.js",
+        filename: "[name].js",
         library: 'ReactResizableTextarea',
         libraryTarget: 'umd'
     },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            include: /\.min\.js$/,
+            minimize: true
+        })
+    ],
     module: {
         loaders: [
             {test: /\.jsx?$/, exclude: [/node_modules/, /dist/], loaders: ["babel-loader", "eslint-loader"]}
