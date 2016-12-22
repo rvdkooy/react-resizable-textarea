@@ -26,10 +26,6 @@ describe('react-resizable-textarea tests', () => {
             const textarea = component.getTextarea();
             expect(textarea.innerHTML).toBe('foo');
         });
-
-        afterAll(() => {
-            TestUtils.unmountFromDocument(component);
-        });
     });
 
     describe('When passing in textarea props', () => {
@@ -37,14 +33,35 @@ describe('react-resizable-textarea tests', () => {
         it('it should map those on the underlying textarea', () => {
             const onChangeMock = jasmine.createSpy('onChangeMock');
 
-            component = TestUtils.renderIntoDocument(<ResizableTextArea onChange={ onChangeMock } value="foo" />);
+            component = TestUtils.renderIntoDocument(
+                <ResizableTextArea onChange={ onChangeMock }
+                    value="foo"
+                    rows={3} />
+            );
             const textArea = TestUtils.findOne(component, '.resizable-textarea');
             expect(textArea.value).toBe('foo');
+            expect(textArea.rows).toBe(3);
 
             TestUtils.Simulate.change(textArea, { target: { value: 'bar' } });
             expect(onChangeMock).toHaveBeenCalled();
-
-            TestUtils.unmountFromDocument(component);
         });
     });
+
+    describe('When specifying minimum dimensions', () => {
+        it('it should render them as inline styles in px', () => {
+            component = TestUtils.renderIntoDocument(
+                <ResizableTextArea defaultValue="a"
+                    minWidth={111}
+                    minHeight={222} />
+            );
+            const textArea = TestUtils.findOne(component, '.resizable-textarea');
+            expect(textArea.style.minWidth).toBe('111px');
+            expect(textArea.style.minHeight).toBe('222px');
+        });
+    });
+
+    afterAll(() => {
+        TestUtils.unmountFromDocument(component);
+    });
 });
+

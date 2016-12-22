@@ -6,16 +6,20 @@ class ResizableTextArea extends Component {
 
         this._lastY = 0;
         this._lastX = 0;
-        this._draggerHeight = 0;
-        this._containerHeight = 0;
-        this._containerWidth = 0;
+        this._textAreaHeight = 0;
+        this._textAreaWidth = 0;
 
         this._onEnableDrag = this._onEnableDrag.bind(this);
         this._onDisableDrag = this._onDisableDrag.bind(this);
         this._onMouseMove = this._onMouseMove.bind(this);
+        this._autoSizeTextarea = this._autoSizeTextarea.bind(this);
     }
 
     componentDidMount() {
+        if (this.props.fitOnMount) {
+            this._autoSizeTextarea();
+        }
+
         this._dragger.addEventListener('mousedown', this._onEnableDrag);
     }
 
@@ -28,6 +32,24 @@ class ResizableTextArea extends Component {
         return this._textArea;
     }
 
+    _autoSizeTextarea() {
+        const lastOverflowY = this._textArea.style.overflowY;
+        const width = Math.max(this._textArea.offsetWidth, this.props.minWidth);
+
+        this._textArea.style.width = width + 'px';
+        this._textArea.style.overflowY = 'hidden';
+
+        const textAreaCS = window.getComputedStyle(this._textArea);
+        const topBorderWidth = parseInt(textAreaCS.getPropertyValue('border-top-width'), 10);
+        const bottomBorderWidth = parseInt(textAreaCS.getPropertyValue('border-bottom-width'), 10);
+
+        let height = topBorderWidth + bottomBorderWidth + this._textArea.scrollHeight;
+        height = Math.max(height, this.props.minHeight);
+
+        this._textArea.style.height = height + 'px';
+        this._textArea.style.overflowY = lastOverflowY;
+    }
+
     _onEnableDrag(e) {
         document.addEventListener('mousemove', this._onMouseMove);
         document.addEventListener('mouseup', this._onDisableDrag);
@@ -37,9 +59,8 @@ class ResizableTextArea extends Component {
 
         this._lastY = e.clientY;
         this._lastX = e.clientX;
-        this._containerHeight = this._container.offsetHeight;
-        this._containerWidth = this._container.offsetWidth;
-        this._draggerHeight = this._dragger.offsetHeight;
+        this._textAreaHeight = this._textArea.offsetHeight;
+        this._textAreaWidth = this._textArea.offsetWidth;
 
         // this prevents scrolling while dragging the textarea
         e.preventDefault();
@@ -64,17 +85,14 @@ class ResizableTextArea extends Component {
     _onMouseMove(e) {
         if (this.props.directions.indexOf('y') !== -1) {
             const yMovement = e.clientY - this._lastY;
-            this._containerHeight = (this._containerHeight + yMovement);
-            this._textArea.style.height =
-                (this._containerHeight - this._draggerHeight - this.props.borderOffset) + 'px';
-            this._container.style.height = (this._containerHeight) + 'px';
+            this._textAreaHeight = Math.max(this._textAreaHeight + yMovement, this.props.minHeight);
+            this._textArea.style.height = this._textAreaHeight + 'px';
         }
 
         if (this.props.directions.indexOf('x') !== -1) {
             const xMovement = e.clientX - this._lastX;
-            this._containerWidth = (this._containerWidth + xMovement);
-            this._container.style.width = this._containerWidth + 'px';
-            this._textArea.style.width = (this._containerWidth - this.props.borderOffset) + 'px';
+            this._textAreaWidth = Math.max(this._textAreaWidth + xMovement, this.props.minWidth);
+            this._textArea.style.width = this._textAreaWidth + 'px';
         }
 
         this._lastX = e.clientX;
@@ -88,32 +106,49 @@ class ResizableTextArea extends Component {
             props[k] = this.props[k];
         });
 
-        if (props.className) {
-            props.className = 'resizable-textarea ' + props.className;
-        } else {
-            props.className = 'resizable-textarea';
-        }
+        props.className = `resizable-textarea ${this.props.className}`;
         props.ref = t => this._textArea = t;
 
+        if (props.style) {
+            props.style.minWidth = props.minWidth;
+            props.style.minHeight = props.minHeight;
+        } else {
+            props.style = {
+                minWidth: props.minWidth,
+                minHeight: props.minHeight
+            };
+        }
+
         delete props.directions;
-        delete props.borderOffset;
+        delete props.minWidth;
+        delete props.minHeight;
+        delete props.fitOnMount;
+
+        const draggerClassNames = `resizable-textarea-dragger direction-${this.props.directions}`;
 
         return (
             React.createElement('div', { className: 'resizable-textarea-container', ref: c => this._container = c },
                 React.createElement('textarea', props),
-                React.createElement('div', { className: 'resizable-textarea-dragger', ref: d => this._dragger = d })
+                React.createElement('div', { className: draggerClassNames, ref: d => this._dragger = d })
             ));
     }
 }
 
 ResizableTextArea.propTypes = {
     directions: PropTypes.string,
-    borderOffset: PropTypes.number
+    className: PropTypes.string,
+    minWidth: PropTypes.number,
+    minHeight: PropTypes.number,
+    fitOnMount: PropTypes.bool
 };
 
 ResizableTextArea.defaultProps = {
     directions: 'y',
-    borderOffset: 2
+    className: '',
+    minWidth: 100,
+    minHeight: 30,
+    fitOnMount: false
 };
 
 export default ResizableTextArea;
+
