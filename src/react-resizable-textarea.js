@@ -54,9 +54,6 @@ class ResizableTextArea extends Component {
         document.addEventListener('mousemove', this._onMouseMove);
         document.addEventListener('mouseup', this._onDisableDrag);
 
-        this._prevTextAreaStyleBackgroundColor = this._textArea.style.backgroundColor;
-        this._textArea.style.backgroundColor = 'transparent';
-
         this._lastY = e.clientY;
         this._lastX = e.clientX;
         this._textAreaHeight = this._textArea.offsetHeight;
@@ -69,7 +66,6 @@ class ResizableTextArea extends Component {
     _onDisableDrag() {
         this._removeEventListeners();
 
-        this._textArea.style.backgroundColor = this._prevTextAreaStyleBackgroundColor;
         // remove selection, which can be a site effect when hovering over the text
         window.getSelection().removeAllRanges();
     }
@@ -127,7 +123,10 @@ class ResizableTextArea extends Component {
         const draggerClassNames = `resizable-textarea-dragger direction-${this.props.directions}`;
 
         return (
-            React.createElement('div', { className: 'resizable-textarea-container', ref: c => this._container = c },
+            React.createElement('div', {
+                className: 'resizable-textarea-container',
+                ref: c => this._container = c
+            },
                 React.createElement('textarea', props),
                 React.createElement('div', { className: draggerClassNames, ref: d => this._dragger = d })
             ));
