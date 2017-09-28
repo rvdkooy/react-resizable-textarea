@@ -1,6 +1,6 @@
 {
   "name": "react-resizable-textarea",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "./dist/react-resizable-textarea.min.js",
   "devDependencies": {
@@ -20,10 +20,11 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-webpack": "^1.8.0",
     "phantomjs": "^2.1.7",
-    "react": "^15.3.2",
-    "react-addons-test-utils": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-testutils-additions": "^15.1.0",
+    "prop-types": "^15.6.0",
+    "react": "^15.6.2",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^15.6.2",
+    "react-testutils-additions": "^15.3.0",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },
