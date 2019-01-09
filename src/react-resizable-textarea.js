@@ -128,9 +128,8 @@ class ResizableTextArea extends Component {
                 className: 'resizable-textarea-container',
                 ref: c => this._container = c
             },
-                React.createElement('textarea', props),
-                React.createElement('div', { className: draggerClassNames, ref: d => this._dragger = d })
-            ));
+            React.createElement('textarea', props),
+            React.createElement('div', { className: draggerClassNames, ref: d => this._dragger = d })));
     }
 }
 
@@ -151,4 +150,3 @@ ResizableTextArea.defaultProps = {
 };
 
 export default ResizableTextArea;
-

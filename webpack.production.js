@@ -1,6 +1,4 @@
-var path = require('path');
-var webpack = require('webpack');
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var webpackConfig = {
     context: __dirname,
     entry: {
@@ -13,20 +11,23 @@ var webpackConfig = {
         library: 'ReactResizableTextarea',
         libraryTarget: 'umd'
     },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            include: /\.min\.js$/,
-            minimize: true
-        })
-    ],
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new UglifyJsPlugin({
+                include: /\.min\.js$/,
+            })
+        ],
+    },
     module: {
-        loaders: [
+        rules: [
             {test: /\.jsx?$/, exclude: [/node_modules/, /dist/], loaders: ["babel-loader", "eslint-loader"]}
         ]
     },
     externals: {
         react: 'umd react'
-    }
+    },
+    mode: 'production',
 };
 
 module.exports = webpackConfig;
