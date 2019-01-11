@@ -64,4 +64,3 @@ describe('react-resizable-textarea tests', () => {
         TestUtils.unmountFromDocument(component);
     });
 });
-

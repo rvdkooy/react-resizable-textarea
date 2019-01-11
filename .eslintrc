@@ -16,6 +16,7 @@
     "import/no-unresolved": 0,
     "import/extensions": 0,
     // React/JSX
+    "react/destructuring-assignment": 0,
     "react/jsx-first-prop-new-line": 0,
     "react/jsx-indent-props": 0,
     "react/jsx-curly-spacing": 0,
@@ -30,5 +31,6 @@
   "env": {
     "browser": true,
     "jasmine": true
-  }
+  },
+  "parser": "babel-eslint"
 }

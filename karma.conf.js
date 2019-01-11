@@ -1,13 +1,15 @@
+process.env.CHROME_BIN = require('puppeteer').executablePath()
+
 module.exports = function (config) {
     config.set({
         basePath: '',
         frameworks: ['jasmine'],
         files: [
-            {pattern: '__tests__/bundle.js', watched: false, included: true, served: true},
+            { pattern: '__tests__/bundle.js', watched: false, included: true, served: true },
         ],
         plugins: [
             'karma-jasmine',
-            'karma-phantomjs-launcher',
+            'karma-chrome-launcher',
             'karma-webpack'
         ],
         reporters: ['progress'],
@@ -18,23 +20,29 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['PhantomJS'],
-
+        browsers: ['ChromeHeadless_WithoutSandbox'],
+        customLaunchers: {
+            ChromeHeadless_WithoutSandbox: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox']
+            }
+        },
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
         singleRun: false,
         webpack: {
             module: {
-                loaders: [
-                    {test: /\.jsx?$/, exclude: [/node_modules/], loaders: ["babel-loader", "eslint-loader"]}
+                rules: [
+                    { test: /\.jsx?$/, exclude: [/node_modules/], loaders: ["babel-loader", "eslint-loader"] }
                 ]
             },
-            webpackMiddleware: {
+            devServer: {
                 noInfo: true,
                 stats: {
                     chunks: false
                 }
             }
         },
+        mode: 'development',
     });
 };
