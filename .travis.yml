@@ -3,6 +3,7 @@ node_js:
 - '8'
 
 deploy:
+  skip_cleanup: true
   provider: npm
   email: "ronald@sharpsolutions.nl"
   api_key: $NPM_TOKEN
